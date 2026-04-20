@@ -47,6 +47,6 @@ jobs:
           printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts 2>/dev/null
-          ssh -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl restart coruscant"
+          ssh -tt -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl restart coruscant"
           sleep 2
-          ssh -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl status coruscant --no-pager"
+          ssh -tt -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl status coruscant --no-pager"
