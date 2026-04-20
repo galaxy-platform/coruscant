@@ -1,4 +1,4 @@
-package com.github.willrees23.coruscant.account;
+package io.github.galaxyplatform.coruscant.account;
 
 import io.github.galaxyplatform.account.Account;
 import org.springframework.stereotype.Service;

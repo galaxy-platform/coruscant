@@ -1,4 +1,4 @@
-package com.github.willrees23.coruscant;
+package io.github.galaxyplatform.coruscant;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

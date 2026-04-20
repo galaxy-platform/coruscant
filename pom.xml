@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.github.willrees23</groupId>
+    <groupId>io.github.galaxyplatform</groupId>
     <artifactId>coruscant</artifactId>
     <version>1.0-SNAPSHOT</version>
 

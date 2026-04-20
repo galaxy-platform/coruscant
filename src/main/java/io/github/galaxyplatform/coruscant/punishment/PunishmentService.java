@@ -1,4 +1,4 @@
-package com.github.willrees23.coruscant.punishment;
+package io.github.galaxyplatform.coruscant.punishment;
 
 import io.github.galaxyplatform.punishment.Punishment;
 import io.github.galaxyplatform.punishment.Revocation;
