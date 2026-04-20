@@ -2,28 +2,36 @@ package io.github.galaxyplatform.coruscant.account;
 
 import io.github.galaxyplatform.account.Account;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 @Service
+@Transactional
 public class AccountService {
 
-    private final ConcurrentMap<UUID, Account> accounts = new ConcurrentHashMap<>();
+    private final AccountRepository repository;
 
-    public Collection<Account> all() {
-        return accounts.values();
+    public AccountService(AccountRepository repository) {
+        this.repository = repository;
     }
 
+    @Transactional(readOnly = true)
+    public List<Account> all() {
+        return repository.findAll().stream().map(AccountEntity::getData).toList();
+    }
+
+    @Transactional(readOnly = true)
     public Optional<Account> byId(UUID uuid) {
-        return Optional.ofNullable(accounts.get(uuid));
+        return repository.findById(uuid).map(AccountEntity::getData);
     }
 
     public Account save(Account account) {
-        accounts.put(account.uuid(), account);
-        return account;
+        AccountEntity entity = repository.findById(account.uuid())
+                .orElseGet(() -> new AccountEntity(account));
+        entity.setData(account);
+        return repository.save(entity).getData();
     }
 }

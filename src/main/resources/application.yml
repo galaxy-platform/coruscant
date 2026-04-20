@@ -1,9 +1,25 @@
 spring:
   application:
     name: coruscant
+  datasource:
+    url: jdbc:postgresql://localhost:5432/coruscant
+    username: coruscant
+    password: coruscant
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
   jackson:
     serialization:
       write-dates-as-timestamps: false
 
 server:
   port: 8080
+
+coruscant:
+  security:
+    api-keys:
+      - name: postman-test-client
+        key: 617ae7846f5876509eff704fc1a86b77ec0b2e52ecbfe0dfc9cf110c37e5fa05
+      - name: minecraft-plugin
+        key: 910341f85053a47b2b0d2a54de5fee3cdae2d54f848975cab84ee73da35d8f88
