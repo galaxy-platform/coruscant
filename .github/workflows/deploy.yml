@@ -38,13 +38,15 @@ jobs:
           strip_components: 1
 
       - name: Restart service
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          request_pty: true
-          script: |
-            sudo /usr/bin/systemctl restart coruscant
-            sleep 2
-            sudo /usr/bin/systemctl status coruscant --no-pager
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl restart coruscant"
+          sleep 2
+          ssh -i ~/.ssh/deploy_key "$VPS_USER@$VPS_HOST" "sudo /usr/bin/systemctl status coruscant --no-pager"
